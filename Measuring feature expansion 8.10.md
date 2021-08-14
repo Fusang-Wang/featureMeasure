@@ -25,9 +25,25 @@ metrics），量化评价不同算法扩征有效性
 
 ## 1 Introduction
 
-data augmentation is very important
+观点-原理-例子
 
-### 1.1 Related work
+​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. A limited or imbalanced dataset may result in overfitting, when the model ils to perform on unseen data. 
+
+​	Various technique,such as dropout, transfer learning or batch nomalization, have been developed to tackle overfiiting, among which Data Augementation can solve the problem from and has improved the Network's performance in discrimitive task. example1,example2.
+
+​	Generative Models have shown great potential in image data augementation. By oversampling on the learned data maniold. Generative Models create sythetic images that retain cetain feature and add them back to the original dataset. example in medical images. Futher more, some recent proposed GAN models express some functionality in feature controling InfoGAN (feature editing)and feature mixing styleGAN, which indicates a more orienated augmentation method.
+
+​	Although Generative models have shown great ability in image data augemantation, the evaluation of their augmentation ability has merely been disscussed. In fact, how do we quantifiy data augmentation? how do we evaluate the intrisic structure of a dataset?Some base metric were proposed, we think the prior assumption are comparativley naive. example IS and FIS. 
+
+
+
+  In this paper,
+
+* A feature enhancement measure, LASFAS, is designed in the semantic space based on the optimal transmission theory, which can reasonably evaluate the feature enhancement effect of image data.
+* A feature space f,f is proposed to measure the semantic information based on the flow learning assumption and the generator principle, which only depends on the original data set but not on the generation model, making the evaluation method both relevant and generalized.
+* Different generative models as well as sampling methods are evaluated to guide the selection and use of generative models for data augmentation.
+
+## 先验思路
 
 ### 1.2 Central question
 
@@ -169,6 +185,9 @@ To test and evaluate the performance of LASFAS, we compared it with traditional 
 * 在语义空间中基于最优传输理论设计了特征增强测度——LASFAS， 能够合理的评价图片数据特征增强效果。
 * 基于流形学习假设和生成器原理提出了度量语义信息的特征空间 $\mathbb{F}$，$\mathbb{F}$仅依赖原有数据集而不依赖于生成模型，使得评价方法既有针对性也不失泛用性。
 * 对不同生成模型以及采样方法进行了评价，指导生成模型在数据增强上的选择与使用。
+
+
+
 * feature space 只依赖于原数据集，不依赖于生成的模型与方法。这使得我们的方法相较于FID 和 IS 更加具有针对性，但又不失泛用性。
 * 通过GAN族生成的数据直接度量生成方法data-augementation的有效性(feature expansion)。
 * 探讨了能够度量语义信息的特征空间需要满足的性质，有效评价语义扩充的条件。在公共特征空间中，提出了着眼于语义信息评价数据增强效果的评价指标。
