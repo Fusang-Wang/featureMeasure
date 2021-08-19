@@ -1,4 +1,4 @@
-# **Measuring** feature expansion of image data augmentation（for generative models）
+# Measuring image data augmentation for generative models
 
 ## Abstract
 
@@ -23,11 +23,9 @@ metrics），量化评价不同算法扩征有效性
 
 对不同类型的GAN网络测试了评价模型与评价指标，分析性能差异，并与传统的评价模型做对比。探讨了能够度量语义信息的特征空间需要满足的性质，有效评价语义扩充的条件。在公共特征空间中，提出了着眼于语义信息评价数据增强效果的评价指标。指导在数据增强问题上GAN的评价与选择。
 
+## OUTLINE:
+
 ## 1 Introduction
-
-
-
-## 先验思路
 
 ### 1.2 Central question
 
@@ -43,15 +41,21 @@ solve insufficient data, solve class imbalance, feature augmentation
 
 **论文的立意：争论的点** **悬而未决的问题** 参考顾老师提出的方法
 
+
+
+## 正文：
+
+## 1.Introduction
+
 ​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. In industry scenario, the data is usually expensive and laborious to collect due to data privacy, require of expertise. A limited  and imbalanced dataset becomes a major obstacle in the implementation of AI.
 
 ​	Data Augmentation, aimed at extracting more information from the original data to enhance the training dataset have shown great results in tackling both limited dataset and classed-imbalance and is gradually becoming the key to the industrialization of Artificial Intelligence. Nevertheless, traditional data augmentation methods, encompassing geometric or color-space transformation, have reached a bottleneck in exporting and enriching the semantic feature of the data and spray a light on DL-based augmentation methods, especially Generative Models.
 
 ​	Generative Models have been widely and successful adapted in Automatic Driving, Medical Research or Computer Vision fields. While GANs have shown impressive ability in synthesizing exquisite fake samples that confuses human expert, they also suffers Model Collapse and hard to reach the Nash-equilibrium in Training. Generating exquisite fake images marks a successful stage of GAN models, and is usually evaluated by FID, FIS or directly by human eyes, yet the enhancement that GAN has brought to dataset(partially, how GANs conquer the Model Collapse) has merely been discussed. Recent GAN models express great ability to expand the feature of the original dataset, such as Info GAN (attribute editing) or styleGAN (feature synthesis). Well-trained GAN models can not only solve limited-data or class-imbalance, but also enrich the semantic feature of the original dataset.
 
-​	
+**Address the problem** ：解决什么痛点？
 
-​	In this paper, we tend to measure image data augmentation of generative models in a specially designed semantic feature space $F$. First, we propose the criterions on feature space based on the purpose of data augmentation and the nature of  GAN-based augmentation method (chapter 2). Secondly, we designed a semantic feature space satisfying the proposed criterions, also a OT-based measure is proposed in the semantic feature space compare the original and augmented distribution (chapitre3). Finally, we proposed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapter 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... . **address the problem** ： 生成模型的数据是否能用于AI模型的训练。解决什么痛点？
+​	The impressive performance of generative models expand our imagination on the use of machine creativity in data augmentation , nevertheless has generative models really augmented the data? Moreover, has the "creativity" of GAN really expand the semantic in the dataset? As a first investigation the this large problem, this paper tries to propose a evaluation model that measures the augmentation ability (concerning data sufficiency, class balance and feature expansion) for generative models. First, we propose the criterions on feature space based on the purpose of data augmentation and the nature of  GAN-based augmentation method (chapter 2). Secondly, we designed a semantic feature space satisfying the proposed criterions, also a OT-based measure is proposed in the semantic feature space compare the original and augmented distribution (chapitre3). Finally, we proposed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapter 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... .
 
 ​	The principle contributions of the paper are:
 
@@ -61,7 +65,56 @@ solve insufficient data, solve class imbalance, feature augmentation
 
 
 
-## 2 Feature space for evaluation of image data augmentation(如果2.1只做review没有自己的东西，做连贯的一章：驳论-立论-解决方案)
+## OUTLINE:
+
+## 2 Feature space for evaluation of image data augmentation(如果2.1只做review没有自己的东西，做连贯的一章)
+
+### Feature space of image data（删？）
+
+* Latent space of gan
+
+  * 隐空间，满足的性质1，性质2，性质3 -> 通过前人对隐空间性质的研究验证。
+  * 隐空间具有语义表征的能力：属性编辑等。
+  * 揭示GAN对样本特征扩充的物理本质：**流形学习角度解释**GANs如何补全特征+小实验。
+* Network-based feature space
+* **What are the problems?** latent space oddity: difficult to design metrics, feature space: hard to explain, some prior assumptions are not varified: vgg-network based FID and IS score.
+* However some naive idea for feature measurement shall be preserved
+
+  * linear separable of latent space
+  * linearity of latent space
+
+### Analysis: Data augmentation（G）与 F 之间的逻辑关系
+
+objective of data augmentation:
+
+solve insufficient data, solve class imbalance, feature augmentation（controversial）
+
+**The nature of feature-based data augmentation**
+
+* high dimensional data -> a distribution on low dimensional non linear manifold
+* genrative model, transfor uniform distribution to the original data distribution -> oversampling the learned manifold with interpolation and expolation.
+
+**How to evaluate**
+
+* measuring the completion of these tasks:
+
+  * insuficient data：efficient interpolation-linearity,
+  * solve class imbalance: class separability,  K-means
+  * feature augmentation: between class convexity
+* how to evaluate interpolation or expolations on the manifold? (no inclusion of tradidtional method that requires prior knowleadge)
+
+  * require a feature space that flatten the manifold. (difficulty: manifold too abstract,
+  * interpolation: constrained in a single class. For each class, linearity of different semantic features
+  * expolation:each class forms a convex set in the $\mathbb{F}$ space, when new feature appears, it falls out of the current zone
+
+### Conclusion: Criterions on feature space
+
+* Criterions on feature space for evaluation of image data augmentation: how to evaluation data augmentation based on feature space? 能够度量图片语义的空间需要哪些性质?
+* we propose a new feature space to evaluate feature expansion of images data:  $\mathbb{F}$ space
+
+
+
+## 正文：
 
 ## 2 Related Works
 
@@ -89,58 +142,23 @@ solve insufficient data, solve class imbalance, feature augmentation
 
 ### Criterion on semantic feature space
 
-​	Knowing the goal for data augmentation as well as the oversampling nature of GAN-based method, we are close to define the question: based on the oversampling nature, how do we measure the performance of GAN models on Data-sufficiency, Class-balance and Semantic feature expansion. It is naturally to consider to compare the original and augmented data distribution on the data manifold, but the question is the manifold is highly abstract theoretical concept and hard to find. Therefore, we propose to designed a feature space that fits certain criterions targeting the three major tasks in data augmentation.
+​	Knowing the goal for data augmentation as well as the oversampling nature of GAN-based method, we are close to define the question: based on the oversampling nature, how do we measure the performance of GAN models on Data-sufficiency, Class-balance and Semantic feature expansion. It is naturally to consider to compare the original and augmented data distribution on the data manifold, but the question is the manifold is highly abstract theoretical concept and hard to find. Therefore, we propose on alternative to designed a feature space that fits certain criterions targeting the three major tasks in data augmentation.
 
-* In class linearity:  GAN-based model usually tackle data insufficiency by randomly sampling in latent space. However the sampled data point might not be efficient in data augmentation, for example when  most images are sampled around a single point in data manifold, also known as model collapse in GAN training.
-* Between class separability: In order to clearly measure the data point in each class, we expect the distance between centers of different classes to be as far as possible. Moreover, we also expect the two different class set to be separated by a hyperplane.
-* Convexity: When features are enhanced or synthesized, which we consider to form a new class right here, we expected these data point will fall out of the root feature zone. In other words, each class form a convex set that feature-preserving operation, such as in class interpolation, is also class preserving in the feature space. Feature augmenting operations such as style mixing or feature enhancement will generate out-class points.
+* In class linearity:  
 
+  GAN-based model usually tackle data insufficiency by randomly sampling in latent space. However the sampled data point might not be efficient for data augmentation, for example when  most images are sampled around a single point in data manifold, also known as model collapse in GAN training.
 
+* Between class separability: 
 
-### 2.1 Feature space of image data（驳论）
+  In order to clearly measure the data point in each class for class balance, we expect the distance between centers of different classes to be as far as possible. Moreover, we also expect the two different class set to be separated by a hyperplane.
 
-* Latent space of gan
+* Convexity: 
 
-  * 隐空间，满足的性质1，性质2，性质3 -> 通过前人对隐空间性质的研究验证。
-  * 隐空间具有语义表征的能力：属性编辑等。
-  * 揭示GAN对样本特征扩充的物理本质：**流形学习角度解释**GANs如何补全特征+小实验。
-* Network-based feature space
-* **What are the problems?** latent space oddity: difficult to design metrics, feature space: hard to explain, some prior assumptions are not varified: vgg-network based FID and IS score.
-* However some naive idea for feature measurement shall be preserved
-
-  * linear separable of latent space
-  * linearity of latent space
-
-### 2.2 Analysis: Data augementation（G）与 F 之间的逻辑关系
-
-objective of data augmentation:
-
-solve insuficient data, solve class imbalance, feature augementation（controversial）
-
-**The nature of feature-based data augmentation**
-
-* high dimensional data -> a distribution on low dimensional non linear manifold
-* genrative model, transfor uniform distribution to the original data distribution -> oversampling the learned manifold with interpolation and expolation.
-
-**How to evaluate**
-
-* measuring the completion of these tasks:
-
-  * insuficient data：efficient interpolation-linearity,
-  * solve class imbalance：class separability,  K-means
-  * feature augementation：between class convexity
-* how to evaluate interpolation or expolations on the manifold? (no inclusion of tradidtional method that requires prior knowleadge)
-
-  * require a feature space that flatten the manifold. (difficulty: manifold too abstract,
-  * interpolation: constrained in a single class. For each class, linearity of different semantic features
-  * expolation:each class forms a convex set in the $\mathbb{F}$ space, when new feature appears, it falls out of the current zone
-
-### 2.3 Conclusion: Criterions on feature space
-
-* Criterions on feature space for evaluation of image data augmentation: how to evaluation data augmentation based on feature space? 能够度量图片语义的空间需要哪些性质?
-* we propose a new feature space to evaluate feature expansion of images data:  $\mathbb{F}$ space
+  When features are enhanced or synthesized, which we believe they should be consider different from each source class, we expected these data point to fall out of the root feature zone. In other words, each class shall form a convex set that feature-preserving operation, such as in class interpolation, is also class preserving in the feature space. Feature augmenting operations such as style mixing or feature enhancement will generate out-class points.
 
 
+
+## OUTLINE:
 
 ## 3 Toward $\mathbb{F}$ space
 
@@ -150,9 +168,9 @@ Based on the criterions proposed in section 2, we attempt to, in this section, f
 
 measuring the completion of these tasks:
 
-* insuficient data：efficient interpolation-linearity,
-* solve class imbalance：class separability,  K-means
-* feature augementation：between class convexity
+* insufficient data: efficient interpolation-linearity,
+* solve class imbalance: class separability,  K-means
+* feature augmentation: between class convexity
 
 ### 3.2 OT-based metrics in feature space $\mathbb{F}$（metric design）
 
@@ -182,6 +200,10 @@ measuring the completion of these tasks:
 * 对于两个预训练的生成器网络A，B
 * 寻找映射f, 以方法一中提所出的性质为目标将A，B映射到**公共中间空间**W， W是一个特征空间。
 * 在**公共中间空间**W中选择比较分布的距离。
+
+
+
+## OUTLINE:
 
 ## 4 Experiment
 
