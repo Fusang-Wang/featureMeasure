@@ -25,56 +25,6 @@ metrics），量化评价不同算法扩征有效性
 
 ## 1 Introduction
 
-观点-原理-例子
-
-​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. In industry scenario, the data is usually expensive and laborious to collect due to data privacy, require of expertise. A limited  and imbalanced dataset becomes a major obstacle in the implementation of AI.
-
-​	Data Augmentation, aimed at extracting more information from the original data to enhance the training dataset have shown great results in tackling both limited dataset and classed-imbalance and is gradually becoming the key to the industrialization of Artificial Intelligence. Nevertheless, traditional data augmentation methods, encompassing geometric or color-space transformation, have reached a bottleneck in exporting and enriching the semantic feature of the data and spray a light on DL-based augmentation methods, especially Generative Models.
-
-​	Generative Models have been widely and successful adapted in Automatic Driving, Medical Research or Computer Vision fields. While GANs have shown impressive ability in synthesizing exquisite fake samples that confuses human expert, they also suffers Model Collapse and hard to reach the Nash-equilibrium in Training. Generating exquisite fake images marks a successful stage of GAN models, and is usually evaluated by FID, FIS or directly by human eyes, yet the enhancement that GAN has brought to dataset(partially, how GANs conquer the Model Collapse) has merely been discussed. Recent GAN models express great ability to expand the feature of the original dataset, such as Info GAN (attribute editing) or styleGAN (feature synthesis). Well-trained GAN models can not only solve limited-data or class-imbalance, but also enrich the semantic feature of the original dataset.
-
-​	In this paper, we tend to measure feature expansion for image data augmentation in a specially designed semantic feature space $F$​. First, we disscuss the criterions on feature space based on the purpose of data augmentation and the nature of  GAN-based augmentation method (chapitre 2). Secondly, we designed a semantic feature space satisfying the proposed criterions, also a OT-based measure is proposed in the semantic feature space compare the original and acugmented distribution (chapitre3). Finally, we propsed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapitre 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... .
-
-​	The principle contributions of the paper are:
-
-* A semantic feature space  is proposed to measure the semantic feature expansion in data augmentation, the method only depends on the original data set, making the evaluation method both relevant and generalized.
-* A OT-based feature enhancement measure, LASFAS, is designed in the semantic feature space, which has more reliability on the evaluation of feature augmentation.
-* Different generative models as well as sampling methods are evaluated to guide the selection and use of generative models for data augmentation.
-
-## 2 Related Works
-
-###  Data augmentation
-
-​	Data augmentation techniques were first developed to solve overfitting in Deep Learning. A model overfits the training data when it performs well on previously seen data but poorly on unseen data. The two main cause of overfitting are sucifficient data and class-imbalance. Insufficient data is a prevalent challenge in Computer Vision. It is a generally accepted that larger datasets result in better Deep Learning models.However, assembling enormous datasets can be a very daunting task due to the manual effort of collecting and labeling data. for example in Medical Analysis, many of the images studied are derived from computerized tomography (CT) and magnetic resonance imag-ing (MRI) scans, both of which are expensive and labor-intensive to collect. Class-imbalance refers to the abnormal ratio of majority and minority samples in a data set. The model trained on a dataset with imbalanced classes usually have the tendancy to "sacrifice" minor samples to ensure accuracy on majority classes. As a consequence, the model usually fails to perform on minor classes. Moreover, improving the generalization ability of Deep models is one of the most difficult challenges today. Tasks like domain adaptation and generization require the model to extract as many useful information as possible for the learning of a unseen domain.
-
-​	Traditional data augmentation techniques based on geometrics or color transformation, such as rotation or tranlation can artiicially inflate the dataset and partially solve insufficient data or class imbalance.(citation) However the prior knowleadge set by human constrains its abilbity in enriching sematic features.The generative-based augmentation method, on the other hand has shown great potential in semantic feaure generation and controling. ... et al. propsod a feature synthesis network styGAN and has greatly enrich the facial semantic features of the original dataset. ... et al. proposed a attribute edditing method based on GAN models that enable feature controling of the generated samples.
-
-​	Thus we define the three main tasks for data augmentation as:
-
-* Data-sufficiency
-* Class-balance
-* Semantic feature expansion
-
-​    To measure the augmentation abilibty of a GAN model, we will then measure its ability on the three sub tasks of data augmentation. Before heading down to the specific measuring method, we want to discuss the nature of generative-based augmentation method, and how and wahy GAN-based models have great potential on three main tasks of data augmentation.
-
-###  Nature of GAN-based augmentation method
-
-​	The real data satisfies the manifold distribution hypothesis: their distribution is close to a low dimensional manifold in the high dimensional image space.
-
-​	*Ideally, if given an embedding map f : χ → Ω and a dense dataset X sampled from a distribution νgt supported on χ, the purpose of the generation model is to generate new samples following the distribution of νgt and locating on the manifold χ. For the AE-OT model, it only requires that the reconstructed images should be similar to the real ones under L2 distance. As a result, the support of the generated image distribution may only fit the real manifold χ well near the given samples. For GAN model, on one hand, the feature loss and content loss require that the reconstructed manifold  should approach to the real manifold χ on the given samples; on the other hand, the discriminator is used to regularize the fitting performance of the generated manifold on both the given samples and new generated samples should fit the real manifold well. Therefore, the generated manifold by the GAN model fits the real manifold χ far more better than the AE models. In conclusion, first of all, with the help of the discriminator, GAN models fit better the real data manifolds. Secondly, when generating noew samples, GAN models transform the prior distribution in latent space to distribution on the learned data manifold.*
-
-​	Thus the main mehod for GAN-based image data augmentation is to oversampling on the learned data manifold. The tow mainstream manipulation for oversampling are interpolation and extrapolation of semantic features. interpolation refers to the sampling method that interpolates between two different points on manifold distribution, which ideally bring a linear changes in the picture. Extrpolation refers to operation that fills up the flaw on the manfiold, these flaw may be caused by class imbalance or limited data of the original data set. Such operation results in the sythesis or enhancement of features. The styling-mixing operation of styleGAN is a good example of designed featue extrapolation technique.
-
-### Criterion on semantic feature space
-
-​	Knowing the goal for data augmentation as well as the oversampling nature of GAN-based method, we are close to define the question: based on the oversampling nature, how do we measure the performance of GAN models on Data-sufficiency, Class-balance and Semantic feature expansion. It is naturally to consider to compare the original and augmented data distribution on the data manifold, but the question is the manifold is highly abtract theoriatical concept and hard to find. Therefore, we propose to designed a feature space that fits certain criterions targeting the three major tasks in data augmentation.
-
-* In class linearity:  GAN-based model usually tackle data insufficiency by randomly sampleing in latent space
-* between class separability
-* convexity
-
-
-
 
 
 ## 先验思路
@@ -83,19 +33,67 @@ metrics），量化评价不同算法扩征有效性
 
 **objective of data augmentation:**
 
-solve insuficient data, solve class imbalance, feature augementation
+solve insufficient data, solve class imbalance, feature augmentation
 
 **How to measure feature expansion for image data augmentation?**
 
 -- What are the criterions on feature space for evaluation of image data augmentation，and our solution.
 
-问题的逻辑，problem formulation.
+问题的逻辑，problem formulation.观点-原理-例子
+
+**论文的立意：争论的点** **悬而未决的问题** 参考顾老师提出的方法
+
+​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. In industry scenario, the data is usually expensive and laborious to collect due to data privacy, require of expertise. A limited  and imbalanced dataset becomes a major obstacle in the implementation of AI.
+
+​	Data Augmentation, aimed at extracting more information from the original data to enhance the training dataset have shown great results in tackling both limited dataset and classed-imbalance and is gradually becoming the key to the industrialization of Artificial Intelligence. Nevertheless, traditional data augmentation methods, encompassing geometric or color-space transformation, have reached a bottleneck in exporting and enriching the semantic feature of the data and spray a light on DL-based augmentation methods, especially Generative Models.
+
+​	Generative Models have been widely and successful adapted in Automatic Driving, Medical Research or Computer Vision fields. While GANs have shown impressive ability in synthesizing exquisite fake samples that confuses human expert, they also suffers Model Collapse and hard to reach the Nash-equilibrium in Training. Generating exquisite fake images marks a successful stage of GAN models, and is usually evaluated by FID, FIS or directly by human eyes, yet the enhancement that GAN has brought to dataset(partially, how GANs conquer the Model Collapse) has merely been discussed. Recent GAN models express great ability to expand the feature of the original dataset, such as Info GAN (attribute editing) or styleGAN (feature synthesis). Well-trained GAN models can not only solve limited-data or class-imbalance, but also enrich the semantic feature of the original dataset.
+
+​	
+
+​	In this paper, we tend to measure image data augmentation of generative models in a specially designed semantic feature space $F$. First, we propose the criterions on feature space based on the purpose of data augmentation and the nature of  GAN-based augmentation method (chapter 2). Secondly, we designed a semantic feature space satisfying the proposed criterions, also a OT-based measure is proposed in the semantic feature space compare the original and augmented distribution (chapitre3). Finally, we proposed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapter 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... . **address the problem** ： 生成模型的数据是否能用于AI模型的训练。解决什么痛点？
+
+​	The principle contributions of the paper are:
+
+* A semantic feature space  is proposed to measure the semantic feature expansion in data augmentation, the method only depends on the original data set, making the evaluation method both relevant and generalized.
+* A OT-based feature enhancement measure, LASFAS, is designed in the semantic feature space, which has more reliability on the evaluation of feature augmentation.
+* Different generative models as well as sampling methods are evaluated to guide the selection and use of generative models for data augmentation.
+
+
 
 ## 2 Feature space for evaluation of image data augmentation(如果2.1只做review没有自己的东西，做连贯的一章：驳论-立论-解决方案)
 
-Related works
+## 2 Related Works
 
+###  Data augmentation
 
+​	Data augmentation techniques were first developed to solve overfitting in Deep Learning. A model overfits the training data when it performs well on previously seen data but poorly on unseen data. The two main cause of overfitting are sucifficient data and class-imbalance. Insufficient data is a prevalent challenge in Computer Vision. It is a generally accepted that larger datasets result in better Deep Learning models.However, assembling enormous datasets can be a very daunting task due to the manual effort of collecting and labeling data. for example in Medical Analysis, many of the images studied are derived from computerized tomography (CT) and magnetic resonance imaging (MRI) scans, both of which are expensive and labor-intensive to collect. Class-imbalance refers to the abnormal ratio of majority and minority samples in a data set. The model trained on a dataset with imbalanced classes usually have the tendency to "sacrifice" minor samples to ensure accuracy on majority classes. As a consequence, the model usually fails to perform on minor classes. Moreover, improving the generalization ability of Deep models is one of the most difficult challenges today. Tasks like domain adaptation and generation require the model to extract as many useful information as possible for the learning of a unseen domain.
+
+​	Traditional data augmentation techniques based on geometrics or color transformation, such as rotation or translation can artificially inflate the dataset and partially solve insufficient data or class imbalance.(citation) However the prior knowledge set by human constrains its ability in enriching sematic features. The generative-based augmentation method, on the other hand has shown great potential in semantic feature generation and controlling. ... et al. proposed a feature synthesis network styleGAN and has greatly enrich the facial semantic features of the original dataset. ... et al. proposed a attribute editing method based on GAN models that enable feature controlling of the generated samples.
+
+​	Thus we define the three main tasks for data augmentation as:
+
+* Data-sufficiency
+* Class-balance
+* Semantic feature expansion
+
+​    To measure the augmentation ability of a GAN model, we will then measure its ability on the three sub tasks of data augmentation. Before heading down to the specific measuring method, we want to discuss the nature of generative-based augmentation method, and how and why GAN-based models have great potential on three main tasks of data augmentation.
+
+###  Nature of GAN-based augmentation method
+
+​	The real data satisfies the manifold distribution hypothesis: their distribution is close to a low dimensional manifold in the high dimensional image space.
+
+​	*Ideally, if given an embedding map f : χ → Ω and a dense dataset X sampled from a distribution νgt supported on χ, the purpose of the generation model is to generate new samples following the distribution of νgt and locating on the manifold χ. For the AE-OT model, it only requires that the reconstructed images should be similar to the real ones under L2 distance. As a result, the support of the generated image distribution may only fit the real manifold χ well near the given samples. For GAN model, on one hand, the feature loss and content loss require that the reconstructed manifold  should approach to the real manifold χ on the given samples; on the other hand, the discriminator is used to regularize the fitting performance of the generated manifold on both the given samples and new generated samples should fit the real manifold well. Therefore, the generated manifold by the GAN model fits the real manifold χ far more better than the AE models. In conclusion, first of all, with the help of the discriminator, GAN models fit better the real data manifolds. Secondly, when generating new samples, GAN models transform the prior distribution in latent space to distribution on the learned data manifold.*
+
+​	Thus the main method for GAN-based image data augmentation is to oversampling on the learned data manifold. The tow mainstream manipulation for oversampling are interpolation and extrapolation of semantic features. interpolation refers to the sampling method that interpolates between two different points on manifold distribution, which ideally bring a linear changes in the picture. Extrapolation refers to operation that fills up the flaw on the manifold, these flaw may be caused by class imbalance or limited data of the original data set. Such operation results in the synthesis or enhancement of features. The styling-mixing operation of styleGAN is a good example of designed feature extrapolation technique.
+
+### Criterion on semantic feature space
+
+​	Knowing the goal for data augmentation as well as the oversampling nature of GAN-based method, we are close to define the question: based on the oversampling nature, how do we measure the performance of GAN models on Data-sufficiency, Class-balance and Semantic feature expansion. It is naturally to consider to compare the original and augmented data distribution on the data manifold, but the question is the manifold is highly abstract theoretical concept and hard to find. Therefore, we propose to designed a feature space that fits certain criterions targeting the three major tasks in data augmentation.
+
+* In class linearity:  GAN-based model usually tackle data insufficiency by randomly sampling in latent space. However the sampled data point might not be efficient in data augmentation, for example when  most images are sampled around a single point in data manifold, also known as model collapse in GAN training.
+* Between class separability: In order to clearly measure the data point in each class, we expect the distance between centers of different classes to be as far as possible. Moreover, we also expect the two different class set to be separated by a hyperplane.
+* Convexity: When features are enhanced or synthesized, which we consider to form a new class right here, we expected these data point will fall out of the root feature zone. In other words, each class form a convex set that feature-preserving operation, such as in class interpolation, is also class preserving in the feature space. Feature augmenting operations such as style mixing or feature enhancement will generate out-class points.
 
 
 
@@ -141,6 +139,8 @@ solve insuficient data, solve class imbalance, feature augementation（controver
 
 * Criterions on feature space for evaluation of image data augmentation: how to evaluation data augmentation based on feature space? 能够度量图片语义的空间需要哪些性质?
 * we propose a new feature space to evaluate feature expansion of images data:  $\mathbb{F}$ space
+
+
 
 ## 3 Toward $\mathbb{F}$ space
 
@@ -199,6 +199,8 @@ To test and evaluate the performance of LASFAS, we compared it with traditional 
 ### 4.2 CelebA dataset
 
 ## 结果
+
+**从实验上证明打分的有效性**：**经过不同生成网络增强之后的数据集在 sematic feature space 中的分布投影。**
 
 * | GAN 方法  | 隐空间的映射   | 对隐空间向量的操作：feature |   |
   | --------- | -------------- | --------------------------- | - |
