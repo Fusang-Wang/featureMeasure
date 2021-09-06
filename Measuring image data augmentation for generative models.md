@@ -53,14 +53,16 @@ solve insufficient data, solve class imbalance, feature augmentation
 
 ​	Generative Models have been widely and successful adapted in Automatic Driving, Medical Research or Computer Vision fields. While GANs have shown impressive ability in synthesizing exquisite fake samples that confuses human expert, they also suffers Model Collapse and hard to reach the Nash-equilibrium in Training. Generating exquisite fake images marks a successful stage of GAN models, and is usually evaluated by FID, FIS or directly by human eyes, yet the enhancement that GAN has brought to dataset(partially, how GANs conquer the Model Collapse) has merely been discussed. Recent GAN models express great ability to expand the feature of the original dataset, such as Info GAN (attribute editing) or styleGAN (feature synthesis). Well-trained GAN models can not only solve limited-data or class-imbalance, but also enrich the semantic feature of the original dataset.
 
-**Address the problem** ：解决什么痛点？
+**Address the problem** ：解决什么痛点？AI很贪数据？实际上能达到什么样的效果？出口扩征完成的训练集能否让神经网络训练的更好。1 对数据集的有效 2 GAN能有效扩征数据
 
-​	The impressive performance of generative models expand our imagination on the use of machine creativity in data augmentation , nevertheless has generative models really augmented the data? Moreover, has the "creativity" of GAN really expand the semantic in the dataset? As a first investigation the this large problem, this paper tries to propose a evaluation model that measures the augmentation ability (concerning data sufficiency, class balance and feature expansion) for generative models. First, we propose the criterions on feature space based on the purpose of data augmentation and the nature of  GAN-based augmentation method (chapter 2). Secondly, we designed a semantic feature space satisfying the proposed criterions, also a OT-based measure is proposed in the semantic feature space compare the original and augmented distribution (chapitre3). Finally, we proposed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapter 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... .
+​	The impressive performance of generative models expand our imagination on the use of machine creativity in data augmentation , nevertheless has generative models really augmented the data? Moreover, can the "creativity" of GAN really expand the semantic in datasets? As a first investigation the this large problem, this paper tries to propose a evaluation model that measures the augmentation ability (concerning data sufficiency, class balance and feature expansion) for generative models by introducing a specially designed feature space.
+
+​	First, we define the objective of data augmentation and analyzed the nature of generative-based augmentation method to induce desirable properties of the feature space. Secondly, we proposed a new loss function based on properties and find the semantic feature space by training a neural network, a OT-based measure is also proposed to compare the original and augmented distribution (chapitre3). Finally, we proposed a data augmentation evaluation method for GAN models, different GAN algorithms were tested to guide the selection and design of GAN in image data augmentation.( chapter 3 and 4) We found that stylegan and ... lead GAN-based augmentation method in .... .
 
 ​	The principle contributions of the paper are:
 
-* A semantic feature space  is proposed to measure the semantic feature expansion in data augmentation, the method only depends on the original data set, making the evaluation method both relevant and generalized.
-* A OT-based feature enhancement measure, LASFAS, is designed in the semantic feature space, which has more reliability on the evaluation of feature augmentation.
+* A semantic feature space  is proposed to measure data augmentation, the method only depends on the original data set, making the evaluation method both relevant and generalized.
+* A more reliable OT-based feature enhancement measure, LASFAS, is designed in the semantic feature space, which makes our metric convenient for the computational implementation.
 * Different generative models as well as sampling methods are evaluated to guide the selection and use of generative models for data augmentation.
 
 
@@ -120,7 +122,7 @@ solve insufficient data, solve class imbalance, feature augmentation（controver
 
 ###  Data augmentation
 
-​	Data augmentation techniques were first developed to solve overfitting in Deep Learning. A model overfits the training data when it performs well on previously seen data but poorly on unseen data. The two main cause of overfitting are sucifficient data and class-imbalance. Insufficient data is a prevalent challenge in Computer Vision. It is a generally accepted that larger datasets result in better Deep Learning models.However, assembling enormous datasets can be a very daunting task due to the manual effort of collecting and labeling data. for example in Medical Analysis, many of the images studied are derived from computerized tomography (CT) and magnetic resonance imaging (MRI) scans, both of which are expensive and labor-intensive to collect. Class-imbalance refers to the abnormal ratio of majority and minority samples in a data set. The model trained on a dataset with imbalanced classes usually have the tendency to "sacrifice" minor samples to ensure accuracy on majority classes. As a consequence, the model usually fails to perform on minor classes. Moreover, improving the generalization ability of Deep models is one of the most difficult challenges today. Tasks like domain adaptation and generation require the model to extract as many useful information as possible for the learning of a unseen domain.
+​	Data augmentation techniques were first developed to solve overfitting in Deep Learning. A model overfits the training data when it performs well on previously seen data but poorly on unseen data. The two main cause of overfitting are sucifficient data and class-imbalance. **Insufficient data** is a prevalent challenge in Computer Vision. It is a generally accepted that larger datasets result in better Deep Learning models.However, assembling enormous datasets can be a very daunting task due to the manual effort of collecting and labeling data. for example in Medical Analysis, many of the images studied are derived from computerized tomography (CT) and magnetic resonance imaging (MRI) scans, both of which are expensive and labor-intensive to collect. **Class-imbalance** refers to the abnormal ratio of majority and minority samples in a data set. The model trained on a dataset with imbalanced classes usually have the tendency to "sacrifice" minor samples to ensure accuracy on majority classes. As a consequence, the model usually fails to perform on minor classes. Moreover, improving the generalization ability of Deep models is one of the most difficult challenges today. Tasks like domain adaptation and generation require the model to extract as many useful information as possible for the learning of a unseen domain.
 
 ​	Traditional data augmentation techniques based on geometrics or color transformation, such as rotation or translation can artificially inflate the dataset and partially solve insufficient data or class imbalance.(citation) However the prior knowledge set by human constrains its ability in enriching sematic features. The generative-based augmentation method, on the other hand has shown great potential in semantic feature generation and controlling. ... et al. proposed a feature synthesis network styleGAN and has greatly enrich the facial semantic features of the original dataset. ... et al. proposed a attribute editing method based on GAN models that enable feature controlling of the generated samples.
 
@@ -134,11 +136,18 @@ solve insufficient data, solve class imbalance, feature augmentation（controver
 
 ###  Nature of GAN-based augmentation method
 
+传统GAN可以阔吗？为什么不能阔？
+
+GAN为什么能够解决数据增强问题。
+
+* 如果是对data-sufficiency class-imbalance 要求GAN能对流形上的数据进行合理的采样（WGAN- AE-OT-GAN）通过最优传输构建新的latent space
+* 对于 feature expansion, 通过人为设计的操作，style-mixing 等训练方式对流形缺失的部分进行数据补全，达到特征增强的效果。
+
 ​	The real data satisfies the manifold distribution hypothesis: their distribution is close to a low dimensional manifold in the high dimensional image space.
 
 ​	*Ideally, if given an embedding map f : χ → Ω and a dense dataset X sampled from a distribution νgt supported on χ, the purpose of the generation model is to generate new samples following the distribution of νgt and locating on the manifold χ. For the AE-OT model, it only requires that the reconstructed images should be similar to the real ones under L2 distance. As a result, the support of the generated image distribution may only fit the real manifold χ well near the given samples. For GAN model, on one hand, the feature loss and content loss require that the reconstructed manifold  should approach to the real manifold χ on the given samples; on the other hand, the discriminator is used to regularize the fitting performance of the generated manifold on both the given samples and new generated samples should fit the real manifold well. Therefore, the generated manifold by the GAN model fits the real manifold χ far more better than the AE models. In conclusion, first of all, with the help of the discriminator, GAN models fit better the real data manifolds. Secondly, when generating new samples, GAN models transform the prior distribution in latent space to distribution on the learned data manifold.*
 
-​	Thus the main method for GAN-based image data augmentation is to oversampling on the learned data manifold. The tow mainstream manipulation for oversampling are interpolation and extrapolation of semantic features. interpolation refers to the sampling method that interpolates between two different points on manifold distribution, which ideally bring a linear changes in the picture. Extrapolation refers to operation that fills up the flaw on the manifold, these flaw may be caused by class imbalance or limited data of the original data set. Such operation results in the synthesis or enhancement of features. The styling-mixing operation of styleGAN is a good example of designed feature extrapolation technique.
+​	Thus the main method for GAN-based image data augmentation is to oversampling on the learned data manifold. The tow mainstream manipulation for oversampling are **interpolation and extrapolation** of semantic features. interpolation refers to the sampling method that interpolates between two different points on manifold distribution, which ideally bring a linear changes in the picture. **Extrapolation** refers to operation that fills up the flaw on the manifold, these flaw may be caused by class imbalance or limited data of the original data set. Such operation results in the synthesis or enhancement of features. The styling-mixing operation of styleGAN is a good example of designed feature extrapolation technique.
 
 ### Criterion on semantic feature space
 
@@ -181,7 +190,7 @@ measuring the completion of these tasks:
 
 * insuficient data：efficient interpolation-linearity ---- K-means
 * solve class imbalance：class separability ----
-* feature augementation：between class convexity ----OT comparison?
+* feature augmentation：between class convexity ----OT comparison?
 * **解决了OT距离的存在性**（附件）
 * 提出评价指标的解析解（附件）
 * 确立公共隐空间中的特征扩充评价指标（测度metrics)--LASFAS
@@ -203,6 +212,54 @@ measuring the completion of these tasks:
 
 
 
+## 3 Toward $F$ space
+
+The three properties listed  at the end of the chapter 2 are highly desirable for the feature space, they are by no means easy to obtain. The key is to find a measure for dependency of data. 
+
+* to achieve within class separability, we want the learned feature of different classes to be maximally independent, they will together span the feature space as large as possible.
+* to achieve convexity and linearity: for a given class, we want the features to be maximally coherent, and are constrained in a same linear sub feature space.
+
+### OT-based dependency measure
+
+with sharp entropic variant of the optimal transport problem 
+
+* it lowers the computational complex-ity to near-quadratic 
+
+* it turns the problem into a strongly convex one, for which gradients can be computed efficiently and
+
+*  it allows to vectorize the computation of all Wasserstein distances in a batch, which is particularly ap-pealing for training deep neural nets
+
+(M. Cuturi, “Sinkhorn distances: Lightspeed computation of opti-mal transport,” in Advances in Neural Information Processing Sys-tems, 2013.
+
+G. Luise, A. Rudi, M. Pontil, and C. Ciliberto, “Differential prop-erties of sinkhorn approximation for learning with wasserstein distance,” in Advances in Neural Information Processing Systems, 2018.)
+
+
+
+<img src="C:\Users\fusangwang\AppData\Roaming\Typora\typora-user-images\image-20210823193246137.png" alt="image-20210823193246137" style="zoom:67%;" />
+
+ $I_{ot}(x,y) = OT^{\lambda}_{c}(p(x,y), p(x)*p(y)) = H_{OT} (x) - H_{OT}(x|y)$​ ​​​
+
+literature review and property analysis-- explain!!! information bottleneck and maximal coding rate.
+
+
+
+On one hand, to achieve within class separability, we want the learned feature of different classes to be maximally independent, they will together span the feature space as large as possible. On the other hand, for a given class, we want the features to be maximally coherent, and are constrained in a same linear sub feature space.
+
+To be more precise, a good feature representation Z of X is one such that, achieves a large diﬀerence between the dependency for the whole and that for all the subsets:
+
+$ I_{ot}(x,y) = H_{ot}(x) - H_{ot}(x|y)$​
+
+
+
+### Properties of $I_{ot}$
+
+Theorem 1 (Informal Statement) Suppose Z = Z1 ∪ · · · ∪ Zk is the optimal solution that maximizes the rate reduction (11) with the rates R and Rc given by (7) and (8). Assume
+that the optimal solution satisﬁes rank(Z ) ≤ dj .18 We have:
+
+
+
+
+
 ## OUTLINE:
 
 ## 4 Experiment
@@ -211,7 +268,7 @@ To test and evaluate the performance of LASFAS, we compared it with traditional 
 
 ### 4.1 Minist（寻找更好的数据集）
 
-### (验证语义合理性--文献调查) visual salience
+### (验证语义合理性--文献调查) visual salience，attention
 
 通过可视化的方式验证 $\mathbb{F}$ 的合理性
 
