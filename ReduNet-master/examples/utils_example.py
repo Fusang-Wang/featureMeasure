@@ -37,7 +37,7 @@ def generate_2d(data, noise, samples, shuffle=False):
         data.append(X)
         targets += y
     data = np.concatenate(data)
-    #data = data / np.linalg.norm(data, axis=1, ord=2, keepdims=True)
+    data = data / np.linalg.norm(data, axis=1, ord=2, keepdims=True)
     targets = np.array(targets)
 
     if shuffle:

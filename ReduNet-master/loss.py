@@ -9,13 +9,13 @@ class MaximalCodingRateReduction(nn.Module): #TODO: fix this
         self.eps = eps
         self.gam = gam
 
-    def discrimn_loss(self, Z): #Rate distortion for finite samples on a subspace 
+    def discrimn_loss(self, Z):
         m, d = Z.shape
         I = torch.eye(d).to(Z.device)
         c = d / (m * self.eps)
         return logdet(c * covariance(Z) + I) / 2.
 
-    def compress_loss(self, Z, Pi): #
+    def compress_loss(self, Z, Pi):
         loss_comp = 0.
         for j in y.unique():
             Z_j = Z[(y == int(j))[:, 0]]
