@@ -47,7 +47,7 @@ solve insufficient data, solve class imbalance, feature augmentation
 
 ## 1.Introduction
 
-​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. In industry scenario, the data is usually expensive and laborious to collect due to data privacy, require of expertise. A limited  and imbalanced dataset becomes a major obstacle in the implementation of AI.
+​	Deep Learning have made great progress in NLP, CV, SLAM and have brought enormous changes to our lives. While DL has proven its potential and ability in accomplishing computer vision tasks, it is generally accepted that the performance of Deep Learning Models relies heavily on the dataset. In industry scenario, the data is usually expensive and laborious to collect due to data privacy, require of expertise, etc. A limited  and imbalanced dataset becomes a major obstacle in the implementation of AI.
 
 ​	Data Augmentation, aimed at extracting more information from the original data to enhance the training dataset have shown great results in tackling both limited dataset and classed-imbalance and is gradually becoming the key to the industrialization of Artificial Intelligence. Nevertheless, traditional data augmentation methods, encompassing geometric or color-space transformation, have reached a bottleneck in exporting and enriching the semantic feature of the data and therefore spray a light on DL-based augmentation methods, especially Generative Models.
 
